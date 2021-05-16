@@ -6,11 +6,14 @@ import  bcrypt  from 'bcryptjs'
 let usersSchema= new Schema({
     otp:{
         type:String,
-        required:true
+        required:true,
+        select:false
+
     },
     otpExp:{
         type:String,
-        required:true
+        required:true,
+        select:false
     },
     userType:{
         type:String,
@@ -29,7 +32,9 @@ let usersSchema= new Schema({
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        select:false
+
     },
 },
 {timestamps:true})
