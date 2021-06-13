@@ -45,12 +45,14 @@ class userService {
 
         let UserExist =await User.findOne({email:email})
         if(!UserExist) throw new customError('no user found')
-        if(!UserExist.isEmailVerified) 
-        throw new customError('account not activated enter the otp sent to your email or resend an otp')
         let passCorrect = await bcrypt.compare(password,UserExist.password)
         if(!passCorrect) throw new customError('password incorrect')
-        let user=_.pick(UserExist,["_id"])
-        console.log( user._id)
+        // console.log(UserExist)
+        if(!UserExist.isEmailVerified) 
+        throw new customError('account not activated enter the otp sent to your email or resend an otp')
+  
+        let user=_.pick(UserExist,["_id","email"])
+        // console.log( user._id)
         let accessToken =await jwt.sign({id: user._id},process.env.jwtSecret,{expiresIn:`2h`})
         return {user,token:`Bearer ${accessToken}`}
     }
