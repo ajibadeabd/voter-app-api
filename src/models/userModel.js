@@ -23,6 +23,18 @@ let usersSchema= new Schema({
         required:true,
         unique:true
     },
+    department:{
+        type:String,
+        required:true,
+    },
+    matric_number:{
+        type:Number,
+        required:true,
+    },
+    faculty:{
+        type:String,
+        required:true,
+    },
     isEmailVerified:{
         type:Boolean,
         default:false

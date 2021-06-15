@@ -10,6 +10,11 @@ let Responsehema= new Schema({
         type:String,
         required:false
     },
+    score:{
+        type:Number,
+        required:false,
+        default:0,
+    },
     vote_type_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Response",

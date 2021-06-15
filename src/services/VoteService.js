@@ -8,56 +8,64 @@ import otpGenerator from 'otp-generator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Email  from '../utility/mailServices.js'
-
+// const 
 
 class voteService {
        async generalElection(req,res){
         
         const generalElectionId = (await Vote.findOne({
             vote_type: 'General'
-        }))._id
-        console.log(generalElectionId)
+        }))?._id
         const data = await Data.find({vote_type_id :generalElectionId})
-        return data;
+        const all =[]
+        all.push('General',data)
+        console.log(all)
+
+        return all;
     }
     async facultyElection(req,res){
         
-    const facultytElection = (await Vote.find({
-        vote_type: 'Faculty'
+    const facultytElection = (await Vote.findOne({
+        vote_type: 'Faculty',
+        faculty_name:req.user.faculty
+
     }))
     let All = [];
+    let aaa = [];
       
-        for (const eachfacultyElection of facultytElection) {
+        // for (const eachfacultyElection of facultytElection) {
             let EachFacultyElection = await Data.find({
-                vote_type_id: eachfacultyElection._id
+                vote_type_id: facultytElection?._id
             })
-        let fac = eachfacultyElection;
-           await All.push([fac.faculty_name,...EachFacultyElection])
-        console.log(fac.department_name)
-
-        }
+           await All.push({name:facultytElection?.faculty_name},EachFacultyElection)
+        // }
     return   All;
     }
 
 async departmentElection(req,res){
         
-    const departmentElection = (await Vote.find({
-        vote_type: 'Department'
+    const departmentElection = (await Vote.findOne({
+        vote_type: 'Department',
+        department_name:req.user.department
     }))
     let All = [];
-      
-        for (const eachdepartmentElection of departmentElection) {
+        // for (const eachdepartmentElection of departmentElection) {
             let EachDepartmentElection = await Data.find({
-                vote_type_id: eachdepartmentElection._id
+                vote_type_id: departmentElection?._id
             })
-        let fac = eachdepartmentElection;
-           await All.push([fac.department_name,...EachDepartmentElection])
-        console.log(fac.department_name)
-
-        }
+            console.log(EachDepartmentElection)
+           await All.push({name:departmentElection?.department_name},EachDepartmentElection)
+        // }
     return   All;
 }
+async allElection(req,res){
 
+let dep = await this.departmentElection(req,res) 
+let fac = await this.facultyElection(req,res) 
+let gen = await this.generalElection(req,res) 
+return [dep,fac,gen]
+// return [fac]
+}
 
 }
 

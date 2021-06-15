@@ -10,6 +10,7 @@ const auth = passport.authenticate('jwt',{session:false})
 router.get("/generalElection",voteCtrl.generalElection);
 router.get("/facultyElection",voteCtrl.facultyElection);
 router.get("/departmentElection",voteCtrl.departmentElection);
+router.get("/allElection",auth,voteCtrl.allElection);
 
 
 

@@ -14,5 +14,10 @@ class voteCntroller{
         let data = await voteServ.departmentElection(req,res);
        res.status(200).json(response(true,'vote fetched',data)) 
     }
+
+    async allElection(req,res){
+        let data = await voteServ.allElection(req,res);
+       res.status(200).json(response(true,'vote fetched',data)) 
+    }
 }
 export default new voteCntroller()

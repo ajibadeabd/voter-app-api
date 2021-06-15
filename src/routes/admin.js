@@ -9,5 +9,6 @@ const auth = passport.authenticate('jwt',{session:false})
 // registeration route
 router.get("/dept_faculty",adminCtrl.dept_faculty);
 router.post("/vote",adminCtrl.create_vote);
+//router.post("/vote",auth,adminCtrl.create_vote);
 
 export default  router;
