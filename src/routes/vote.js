@@ -7,6 +7,7 @@ const auth = passport.authenticate('jwt',{session:false})
 /* GET home page. */
 
 // registeration route
+router.post("/",auth,voteCtrl.vote);
 router.get("/generalElection",voteCtrl.generalElection);
 router.get("/facultyElection",voteCtrl.facultyElection);
 router.get("/departmentElection",voteCtrl.departmentElection);

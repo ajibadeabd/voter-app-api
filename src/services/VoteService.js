@@ -60,13 +60,27 @@ async departmentElection(req,res){
 }
 async allElection(req,res){
 
-let dep = await this.departmentElection(req,res) 
-let fac = await this.facultyElection(req,res) 
-let gen = await this.generalElection(req,res) 
-return [dep,fac,gen]
-// return [fac]
+    let dep = await this.departmentElection(req,res) 
+    let fac = await this.facultyElection(req,res) 
+    let gen = await this.generalElection(req,res) 
+    return [dep,fac,gen]
+    // return [fac]
+    }
+async vote(req,res){
+    // check if vote exist
+    let user = req.user._id;
+    let vote = await Data.findOne({_id: req.body.voter_id,
+        vote_type_id: req.body.vote_type_id})
+    if(vote.voters.includes(user)){
+        throw new customError('you have voted earlier on',404)
+    }
+    let previousVoters =  [] || vote.voters ;
+vote.score++;
+previousVoters.push(user)
+vote.voters = previousVoters
+await vote.save()
+    return 
 }
-
 }
 
 export default new voteService()

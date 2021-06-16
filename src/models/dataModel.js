@@ -10,6 +10,10 @@ let Responsehema= new Schema({
         type:String,
         required:false
     },
+    voters:{
+        type:Array,
+        required:false
+    },
     score:{
         type:Number,
         required:false,

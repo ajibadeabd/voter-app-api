@@ -10,7 +10,7 @@ import Email  from '../utility/mailServices.js'
 
 class userService {
     async register(req,res){
-        let {email,password,matric_number,faculty,department} = req.body;
+        let {email,password,matric_number,faculty,department,fullName} = req.body;
         console.log(req.body)
         let otp = otpGenerator.generate(6, { upperCase: true, specialChars: false })
         let isUserExist =await User.findOne({email:email})
@@ -19,7 +19,7 @@ class userService {
         if(password.length<6) throw new customError('password must be more than five characters ')
         let otpExp=Date.now()+300000000000000
           let savedNewUser =await new User({otp,otpExp,
-            matric_number,faculty,department,
+            matric_number,faculty,department,fullName,
               email,password}).save()
       
         // await new Email(req.body, otp).send_otp();

@@ -8,6 +8,10 @@ let usersSchema= new Schema({
         type:String,
         required:true
     },
+    fullName:{
+        type:String,
+        required:true
+    },
     otpExp:{
         type:String,
         required:true
@@ -37,7 +41,7 @@ let usersSchema= new Schema({
     },
     isEmailVerified:{
         type:Boolean,
-        default:false
+        default:true
     },
     password:{
         type:String,
