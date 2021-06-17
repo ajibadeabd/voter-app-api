@@ -75,11 +75,11 @@ async vote(req,res){
     if(vote.voters.includes(user)){
         throw new customError('you have voted earlier on',404)
     }
-//     let previousVoters =  [] || vote.voters ;
-// vote.score++;
-// previousVoters.push(user)
-// vote.voters = previousVoters
-// await vote.save()
+    let previousVoters =  [] || vote.voters ;
+vote.score++;
+previousVoters.push(user)
+vote.voters = previousVoters
+await vote.save()
     return 
 }
 }
