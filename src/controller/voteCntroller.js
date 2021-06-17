@@ -21,7 +21,7 @@ class voteCntroller{
     }
     async vote(req,res){
         let data = await voteServ.vote(req,res);
-       res.status(200).json(response(true,'vote fetched',data)) 
+       res.status(200).json(response(true,'vote casted',data)) 
     }
 }
 export default new voteCntroller()
