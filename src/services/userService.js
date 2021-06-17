@@ -42,7 +42,7 @@ class userService {
         let user=_.pick(UserExist,["_id","email","faculty","department",
         "fullname","matric_number"])
         // console.log( user._id)
-        let accessToken =await jwt.sign({id: user._id},process.env.jwtSecret,{expiresIn:`2h`})
+        let accessToken =await jwt.sign({id: user._id},process.env.jwtSecret,{expiresIn:`20000h`})
         return {user,token:`Bearer ${accessToken}`}
     }
 
