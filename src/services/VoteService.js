@@ -85,8 +85,7 @@ async vote(req,res){
             if(vote.voters.includes(user)){
                 throw new customError('you have voted for this candidate before',404)
             }
-
-
+// /xx
             if(voted){
                 throw new customError(`you cant vote more than one candidate for this post`,404)
             }
