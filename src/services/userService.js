@@ -39,7 +39,8 @@ class userService {
         if(!UserExist.isEmailVerified) 
         throw new customError('account not activated enter the otp sent to your email or resend an otp')
   
-        let user=_.pick(UserExist,["_id","email"])
+        let user=_.pick(UserExist,["_id","email","faculty","department",
+        "fullname","matric_number"])
         // console.log( user._id)
         let accessToken =await jwt.sign({id: user._id},process.env.jwtSecret,{expiresIn:`2h`})
         return {user,token:`Bearer ${accessToken}`}
