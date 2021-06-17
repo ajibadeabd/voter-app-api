@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import Dept from "../models/departmentModel.js";
 import Vote from "../models/voteModel.js";
 import Data from "../models/dataModel.js";
+import Voted from "../models/voteCasted.js";
 import Faculty from "../models/facultyModel.js";
 import otpGenerator from 'otp-generator';
 import bcrypt from 'bcryptjs';
@@ -69,17 +70,40 @@ async allElection(req,res){
 async vote(req,res){
     // check if vote exist
     let user = req.user._id;
+    // post:{
+    // voter_id :{
+    // vote_type_id :{
+    
     let vote = await Data.findOne({_id: req.body.voter_id,
         vote_type_id: req.body.vote_type_id
     })
-    if(vote.voters.includes(user)){
-        throw new customError('you have voted earlier on',404)
-    }
+    
+    let voted = await  Voted.findOne({
+        post:vote.post,
+        vote_type_id: req.body.vote_type_id
+            })
+            if(vote.voters.includes(user)){
+                throw new customError('you have voted for this candidate before',404)
+            }
+
+
+            if(voted){
+                throw new customError(`you cant vote more than one candidate for this post`,404)
+            }
+        
+    
     let previousVoters =  [] || vote.voters ;
 vote.score++;
 previousVoters.push(user)
 vote.voters = previousVoters
 await vote.save()
+
+let s = await  new Voted({
+    post:vote.post,
+    vote_type_id: req.body.vote_type_id,
+    voter_id: req.user._id
+        })
+        s.save()
     return 
 }
 }
