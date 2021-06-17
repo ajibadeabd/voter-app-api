@@ -45,6 +45,7 @@ let usersSchema= new Schema({
     },
     password:{
         type:String,
+        // type:String,
         required:true
     },
 },
