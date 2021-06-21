@@ -23,5 +23,9 @@ class voteCntroller{
         let data = await voteServ.vote(req,res);
        res.status(200).json(response(true,'vote casted',data)) 
     }
+    async getCastedVote(req,res){
+        let data = await voteServ.getCastedVote(req,res);
+       res.status(200).json(response(true,'vote casted',data)) 
+    }
 }
 export default new voteCntroller()

@@ -12,6 +12,7 @@ router.get("/generalElection",voteCtrl.generalElection);
 router.get("/facultyElection",voteCtrl.facultyElection);
 router.get("/departmentElection",voteCtrl.departmentElection);
 router.get("/allElection",auth,voteCtrl.allElection);
+router.get("/getCastedVote",auth,voteCtrl.getCastedVote);
 
 
 

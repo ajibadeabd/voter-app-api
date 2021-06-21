@@ -61,9 +61,9 @@ async departmentElection(req,res){
 }
 async allElection(req,res){
 
-    let dep = await this.departmentElection(req,res) 
-    let fac = await this.facultyElection(req,res) 
-    let gen = await this.generalElection(req,res) 
+    let dep = (await this.departmentElection(req,res)) || []
+    let fac = (await this.facultyElection(req,res)) || []
+    let gen = (await this.generalElection(req,res)) || []
     return [dep,fac,gen]
     // return [fac]
     }
@@ -80,17 +80,18 @@ async vote(req,res){
     
     let voted = await  Voted.findOne({
         post:vote.post,
+        voter_id:user,
         vote_type_id: req.body.vote_type_id
             })
-            if(vote.voters.includes(user)){
-                throw new customError('you have voted for this candidate before',404)
-            }
+            // if(vote.voters.includes(user)){
+            //     throw new customError('you have voted for this candidate before',404)
+            // }
             if(voted){
-                throw new customError(`you cant vote more than one candidate for this post`,404)
+                throw new customError(`you have voted for the post of ${vote.post}`,404)
             }
         
     
-    let previousVoters =  [] || vote.voters ;
+    let previousVoters = vote.voters ;
 vote.score++;
 previousVoters.push(user)
 vote.voters = previousVoters
@@ -102,7 +103,10 @@ let s = await  new Voted({
     voter_id: req.user._id
         })
         s.save()
-    return 
+return }
+async getCastedVote(req,res){
+        let totalVoted = await Voted.find({voter_id: req.user._id})
+        return totalVoted
 }
 }
 
