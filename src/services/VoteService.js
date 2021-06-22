@@ -68,11 +68,7 @@ async allElection(req,res){
     // return [fac]
     }
 async vote(req,res){
-    // check if vote exist
-    let user = req.user._id;
-    // post:{
-    // voter_id :{
-    // vote_type_id :{
+    let user = req.user._id;//votee_post
     
     let vote = await Data.findOne({_id: req.body.voter_id,
         vote_type_id: req.body.vote_type_id
@@ -87,10 +83,10 @@ async vote(req,res){
             //     throw new customError('you have voted for this candidate before',404)
             // }
             if(voted){
-                throw new customError(`you have voted for the post of ${vote.post}`,404)
-            }
-        
-    
+                // throw new customError(`you have voted for the post of ${vote.post}`,404)
+                voted.votee=vote.name;
+                voted.save()
+            }else{
     let previousVoters = vote.voters ;
 vote.score++;
 previousVoters.push(user)
@@ -100,12 +96,14 @@ await vote.save()
 let s = await  new Voted({
     post:vote.post,
     vote_type_id: req.body.vote_type_id,
-    voter_id: req.user._id
+    voter_id: req.user._id,
+    votee: vote.name
         })
-        s.save()
+        s.save()}
 return }
 async getCastedVote(req,res){
         let totalVoted = await Voted.find({voter_id: req.user._id})
+        console.log(totalVoted)
         return totalVoted
 }
 }

@@ -12,6 +12,10 @@ let Castedsehema= new Schema({
         required: true,
         ref: "Users",
       },
+      votee :{
+        type:String,
+        required:true
+        },
     
     vote_type_id :{
         type: mongoose.Schema.Types.ObjectId,
